@@ -2,7 +2,7 @@
   export let name;
 
   const handleClick = () => {
-    console.log('clicked4');
+    console.log('clicked7');
   };
 </script>
 
@@ -12,7 +12,7 @@
     Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
     how to build Svelte apps.
   </p>
-  <button on:click={handleClick}>Click me2</button>
+  <button on:click={handleClick}>Click me6</button>
 </main>
 
 <style>

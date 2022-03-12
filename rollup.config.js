@@ -1,3 +1,4 @@
+import { defineConfig } from 'rollup';
 import svelte from 'rollup-plugin-svelte';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
@@ -7,32 +8,7 @@ import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
 
-function serve() {
-  let server;
-
-  function toExit() {
-    if (server) server.kill(0);
-  }
-
-  return {
-    writeBundle() {
-      if (server) return;
-      server = require('child_process').spawn(
-        'npm',
-        ['run', 'start', '--', '--dev'],
-        {
-          stdio: ['ignore', 'inherit', 'inherit'],
-          shell: true,
-        }
-      );
-
-      process.on('SIGTERM', toExit);
-      process.on('exit', toExit);
-    },
-  };
-}
-
-export default {
+export default defineConfig({
   input: 'src/main.js',
   output: {
     sourcemap: true,
@@ -58,23 +34,23 @@ export default {
     // https://github.com/rollup/plugins/tree/master/packages/commonjs
     resolve({
       browser: true,
-      dedupe: ['svelte'],
+      dedupe: ['svelte'], // imports uncompiled version of imported packages, to reuse common code
     }),
-    commonjs(),
+    commonjs(), // converts imports using common js to ES modules
 
-    // In dev mode, call `npm run start` once
-    // the bundle has been generated
-    !production && serve(),
+    //   // In dev mode, call `npm run start` once
+    //   // the bundle has been generated
+    //   !production && serve(),
 
-    // Watch the `public` directory and refresh the
-    // browser on changes when not in production
+    //   // Watch the `public` directory and refresh the
+    //   // browser on changes when not in production
     !production && livereload('public'),
 
-    // If we're building for production (npm run build
-    // instead of npm run dev), minify
+    //   // If we're building for production (npm run build
+    //   // instead of npm run dev), minify
     production && terser(),
   ],
   watch: {
     clearScreen: false,
   },
-};
+});
