@@ -1,4 +1,6 @@
 <script>
+  import './App.css';
+  import MyComponent from './MyComponent.svelte';
   export let name;
 
   const handleClick = () => {
@@ -76,9 +78,10 @@
   <h1>Hello {name}!</h1>
   <p>
     Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
+    how to build Svelte <span class="app">app</span>
   </p>
   <button on:click={handleClick}>Click me6</button>
+  <MyComponent />
 </main>
 
 <style>
