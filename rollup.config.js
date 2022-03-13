@@ -5,6 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import babel from '@rollup/plugin-babel';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -37,6 +38,11 @@ export default defineConfig({
       dedupe: ['svelte'], // imports uncompiled version of imported packages, to reuse common code
     }),
     commonjs(), // converts imports using common js to ES modules
+    babel({
+      babelHelpers: 'bundled',
+      extensions: ['.js', '.mjs', '.html', '.svelte'],
+      exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
+    }),
 
     //   // In dev mode, call `npm run start` once
     //   // the bundle has been generated
@@ -44,7 +50,7 @@ export default defineConfig({
 
     //   // Watch the `public` directory and refresh the
     //   // browser on changes when not in production
-    !production && livereload('public'),
+    // !production && livereload('public'),
 
     //   // If we're building for production (npm run build
     //   // instead of npm run dev), minify
