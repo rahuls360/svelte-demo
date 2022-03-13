@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "serve public"
+    "build": "npm run clean && rollup -c",
+    "dev": "npm run clean && rollup -c -w",
+    "start": "serve public",
+    "clean": "rm -rf public/build"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
@@ -13,9 +14,13 @@
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
+    "path": "^0.12.7",
+    "postcss": "^8.4.8",
+    "rimraf": "^3.0.2",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0"

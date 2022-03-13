@@ -4,8 +4,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
+import postcss from 'rollup-plugin-postcss';
 import babel from '@rollup/plugin-babel';
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -26,7 +27,12 @@ export default defineConfig({
     }),
     // we'll extract any component CSS out into
     // a separate file - better for performance
-    css({ output: 'bundle.css' }),
+    postcss({
+      // if extract: false (Default -> then styles added to head tag)
+      // extract: true, // extracts file to an external stylesheet
+      extract: path.resolve('public/build/main.css'), // customize the name of external stylesheet
+      //     plugins: [],
+    }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
